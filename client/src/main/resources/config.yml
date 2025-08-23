@@ -1,0 +1,9 @@
+#   __  __          _               _
+#  |  \/  |        | |             | |
+#  | \  / | ___  __| |_   _____  __| |
+#  | |\/| |/ _ \/ _` \ \ / / _ \/ _` |
+#  | |  | |  __/ (_| |\ V /  __/ (_| |
+#  |_|  |_|\___|\__,_| \_/ \___|\__,_|
+#
+# This command is run whenever Medved is certain that a player is using cheats.
+punishment: "ban %player% 1mo Cheats"

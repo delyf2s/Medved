@@ -1,0 +1,4 @@
+name: Medved
+version: '2.2.0'
+main: me.delyfss.medved.Medved
+authors: [Delyfss, koloslolya]
