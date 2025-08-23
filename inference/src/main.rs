@@ -28,13 +28,17 @@ struct ResponseModel {
 
 async fn infer(entity: Json<Entity>, model: Extension<CModule>) -> Json<ResponseModel> {
     let model = model.as_ref();
-    let mut dx = Vec::with_capacity(100);
-    let mut dy = Vec::with_capacity(100);
+    let len = entity.frames.len().min(100);
+    let xs: Vec<f32> = entity.frames.iter().take(len).map(|f| f.x).collect();
+    let ys: Vec<f32> = entity.frames.iter().take(len).map(|f| f.y).collect();
 
-    for f in &entity.frames {
-        dx.push(f.x);
-        dy.push(f.y);
-    }
+    let mean_x = xs.iter().sum::<f32>() / len as f32;
+    let mean_y = ys.iter().sum::<f32>() / len as f32;
+    let std_x = (xs.iter().map(|v| (v - mean_x).powi(2)).sum::<f32>() / len as f32).sqrt();
+    let std_y = (ys.iter().map(|v| (v - mean_y).powi(2)).sum::<f32>() / len as f32).sqrt();
+
+    let dx: Vec<f32> = xs.windows(2).map(|w| (w[1] - w[0] - mean_x) / (std_x + 1e-8)).collect();
+    let dy: Vec<f32> = ys.windows(2).map(|w| (w[1] - w[0] - mean_y) / (std_y + 1e-8)).collect();
 
     let input = Tensor::of_slice2(&[dx.as_slice(), dy.as_slice()]).unsqueeze(0).to_device(Device::Cpu);
     let output = model.forward_ts(&[input]).unwrap();
