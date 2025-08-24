@@ -14,7 +14,7 @@ import org.bukkit.entity.Player
 data class Entity(
     val name: String,
     @Deprecated("Used in data collection") var sus: Boolean = false,
-    val frames: MutableList<Frame> = ObjectArrayList(600),
+    val frames: MutableList<Frame> = ObjectArrayList(100),
     @Json(ignore = true) var flying: Int = 21,
     @Json(ignore = true) var x: Float = 0f,
     @Json(ignore = true) var y: Float = 0f,
