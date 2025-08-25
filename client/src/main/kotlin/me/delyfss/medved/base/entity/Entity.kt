@@ -26,7 +26,7 @@ data class Entity(
     }
 
     fun alert(check: String, info: String, punish: Boolean = false) {
-        val message ="${Medved.PREFIX} $name §b$check §7$info"
+        val message = "${Medved.PREFIX} $name §b$check §7$info"
 
         Registry.enabledAlerts.forEach { it.sendMessage(message) }
 
